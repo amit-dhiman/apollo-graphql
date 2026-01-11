@@ -2,7 +2,7 @@ const userResolver={
   Query:{
     getUser:()=>{
       return {
-        naem:"Static User"
+        name:"Static User"
       }
     }
   },
