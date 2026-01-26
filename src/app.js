@@ -2,16 +2,25 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./graphql/schema');
 
+const authMiddleware = require("./middleware/auth");
+
+async function createApolloServer(app) {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    // context: ({ req, }) => {
+    //   const user = authMiddleware(req);
+    //   return { user };
+    // }
+  });
+
+  await server.start();
+  server.applyMiddleware({ app, path: "/graphql" });
+  return server;
+}
 
 async function createApp() {
   const app = express();
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers
-  });
-  
-  await server.start();
-  server.applyMiddleware({ app, path: "/graphql" });
 
   const shutdown = async (signal) => {
     console.log(`---Received-- ${signal}`);
@@ -21,12 +30,10 @@ async function createApp() {
     });
     process.exit(0);
   };
-
   process.on("SIGINT", shutdown);
   process.on("SIGTERM", shutdown);
-
   return app;
 }
 
-module.exports = createApp;
+module.exports = {createApp, createApolloServer};
 

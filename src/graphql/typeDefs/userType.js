@@ -20,8 +20,14 @@ const userType = gql`
   }
 
   type Mutation {
-    registerUser(name: String!,email: String!,password: String!): AuthPayload
-    loginUser(email: String!, password: String!): AuthPayload
+    createUser(name: String!, email:String!): User
   }
-`
+
+  type Subscription{
+    userCreated: User
+  }
+
+  `
+    // registerUser(name: String!,email: String!,password: String!): AuthPayload
+    // loginUser(email: String!, password: String!): AuthPayload
 module.exports = userType;
