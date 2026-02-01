@@ -25,9 +25,7 @@ const userType = gql`
 
   type Subscription{
     userCreated: User
-  }
-
-  `
+  }`
     // registerUser(name: String!,email: String!,password: String!): AuthPayload
     // loginUser(email: String!, password: String!): AuthPayload
 module.exports = userType;

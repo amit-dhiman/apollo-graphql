@@ -27,7 +27,7 @@ const port = process.env.PORT || 5000;
     execute,
     subscribe,
     onConnect:()=>{
-      console.log('--client connected---');
+      console.log('--client connected for subscription---');
     },
     onDisconnect:()=>{
       console.log('--client disconnected for subscription--');

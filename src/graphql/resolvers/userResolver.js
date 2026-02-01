@@ -2,7 +2,7 @@
 // const jwt = require('jsonwebtoken');
 
 const User = require('../../models/User');
-const {subscribe} = require('../../pubsub');
+// const {subscribe} = require('../../pubsub');
 const pubsub = require('../../pubsub');
 const USER_CREATED = "USER_CREATED"
 

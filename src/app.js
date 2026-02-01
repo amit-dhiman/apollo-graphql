@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors");
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./graphql/schema');
 
@@ -22,18 +23,21 @@ async function createApolloServer(app) {
 async function createApp() {
   const app = express();
 
-  const shutdown = async (signal) => {
-    console.log(`---Received-- ${signal}`);
+  // ✅ FIX 1: Enable CORS for Apollo Studio + local dev
+  app.use(
+    cors({
+      origin: [
+        "https://studio.apollographql.com",
+        "http://localhost:3000",
+        "http://localhost:5000",
+      ],
+      credentials: true,
+    })
+  );
 
-    server.close(() => {
-      console.log("HTTP server closed");
-    });
-    process.exit(0);
-  };
-  process.on("SIGINT", shutdown);
-  process.on("SIGTERM", shutdown);
+  app.use(express.json());
   return app;
 }
 
-module.exports = {createApp, createApolloServer};
+module.exports = { createApp, createApolloServer };
 
